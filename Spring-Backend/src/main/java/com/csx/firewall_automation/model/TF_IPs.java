@@ -1,16 +1,10 @@
 package com.csx.firewall_automation.model;
 
 import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
 @Entity
 public class TF_IPs {
 
@@ -44,5 +38,65 @@ public class TF_IPs {
         this.jiraObj = jiraObj;
         this.snowReqObj = snowReqObj;
         this.inFirewall = inFirewall;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public Jira getJiraObj() {
+        return jiraObj;
+    }
+
+    public void setJiraObj(Jira jiraObj) {
+        this.jiraObj = jiraObj;
+    }
+
+    public Snow getSnowReqObj() {
+        return snowReqObj;
+    }
+
+    public void setSnowReqObj(Snow snowReqObj) {
+        this.snowReqObj = snowReqObj;
+    }
+
+    public boolean isInFirewall() {
+        return inFirewall;
+    }
+
+    public void setInFirewall(boolean inFirewall) {
+        this.inFirewall = inFirewall;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "TF_IPs{" +
+                "id=" + id +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", jiraObj=" + jiraObj +
+                ", snowReqObj=" + snowReqObj +
+                ", inFirewall=" + inFirewall +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

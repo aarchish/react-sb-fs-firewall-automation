@@ -1,16 +1,10 @@
 package com.csx.firewall_automation.model;
 
 import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
 @Entity
 public class B2B_IPs {
 
@@ -42,5 +36,65 @@ public class B2B_IPs {
         this.ipAddress = ipAddress;
         this.snowReqObj = snowReqObj;
         this.inFirewall = inFirewall;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public B2B_Customers getCustomerObj() {
+        return customerObj;
+    }
+
+    public void setCustomerObj(B2B_Customers customerObj) {
+        this.customerObj = customerObj;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public Snow getSnowReqObj() {
+        return snowReqObj;
+    }
+
+    public void setSnowReqObj(Snow snowReqObj) {
+        this.snowReqObj = snowReqObj;
+    }
+
+    public boolean isInFirewall() {
+        return inFirewall;
+    }
+
+    public void setInFirewall(boolean inFirewall) {
+        this.inFirewall = inFirewall;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "B2B_IPs{" +
+                "id=" + id +
+                ", customerObj=" + customerObj +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", snowReqObj=" + snowReqObj +
+                ", inFirewall=" + inFirewall +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

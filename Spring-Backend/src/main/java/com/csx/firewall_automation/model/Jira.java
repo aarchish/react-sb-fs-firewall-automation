@@ -1,13 +1,7 @@
 package com.csx.firewall_automation.model;
 
 import jakarta.persistence.*;
-import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
 @Entity
 public class Jira {
 
@@ -21,5 +15,29 @@ public class Jira {
 
     public Jira(String jiraTicket) {
         this.jiraTicket = jiraTicket;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getJiraTicket() {
+        return jiraTicket;
+    }
+
+    public void setJiraTicket(String jiraTicket) {
+        this.jiraTicket = jiraTicket;
+    }
+
+    @Override
+    public String toString() {
+        return "Jira{" +
+                "id=" + id +
+                ", jiraTicket='" + jiraTicket + '\'' +
+                '}';
     }
 }
