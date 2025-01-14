@@ -3,5 +3,10 @@
       "env": {
         "JAVA_VERSION": "23"
       }
+    },
+    "functions": {
+      "api/*.java": {
+        "runtime": "java-23"
+      }
     }
   }
