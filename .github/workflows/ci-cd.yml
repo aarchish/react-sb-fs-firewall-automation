@@ -2,22 +2,16 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    secrets:
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
-    services:
-      docker:
-        image: docker:19.03.12
-        options: --privileged
-        ports:
-          - 2375:2375
-        env:
-          DOCKER_TLS_CERTDIR: ""
 
     steps:
     - name: Checkout code

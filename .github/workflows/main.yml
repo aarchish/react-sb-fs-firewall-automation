@@ -1,0 +1,12 @@
+# .github/workflows/main.yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    uses: ./.github/workflows/ci-cd.yml
+    secrets: inherit
