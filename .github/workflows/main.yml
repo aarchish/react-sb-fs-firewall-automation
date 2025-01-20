@@ -9,6 +9,4 @@ on:
 jobs:
   build-and-deploy:
     uses: ./.github/workflows/ci-cd.yml
-    with:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    secrets: inherit
