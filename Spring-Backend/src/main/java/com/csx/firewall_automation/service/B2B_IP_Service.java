@@ -3,6 +3,7 @@ package com.csx.firewall_automation.service;
 import com.csx.firewall_automation.model.B2B_Customers;
 import com.csx.firewall_automation.model.B2B_IPs;
 import com.csx.firewall_automation.model.Snow;
+import com.csx.firewall_automation.model.User;
 import com.csx.firewall_automation.repository.B2B_IPsRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -19,11 +20,13 @@ public class B2B_IP_Service {
     private final B2B_IPsRepository b2BIPsRepository;
     private final B2B_Customer_Service b2BCustomersService;
     private final SnowService snowService;
+    private final UserService userService;
 
-    public B2B_IP_Service(B2B_IPsRepository b2BIPsRepository, B2B_Customer_Service b2BCustomersService, SnowService snowService) {
+    public B2B_IP_Service(B2B_IPsRepository b2BIPsRepository, B2B_Customer_Service b2BCustomersService, SnowService snowService, UserService userService) {
         this.b2BIPsRepository = b2BIPsRepository;
         this.b2BCustomersService = b2BCustomersService;
         this.snowService = snowService;
+        this.userService = userService;
     }
 
     public List<B2B_IPs> retrieveAllB2bIps() {
@@ -49,7 +52,14 @@ public class B2B_IP_Service {
         Snow newSnow = (findSnow == null) ? new Snow(inputSnowReq) : findSnow;
         logger.info("Linked Snow object: {}", newSnow);
 
-        B2B_IPs newB2Bip = new B2B_IPs(newCustomer, b2b_ip.getIpAddress(), newSnow, b2b_ip.isInFirewall());
+        String inputRequestor = b2b_ip.getRequestedBy().getName();
+        logger.debug("Processing Requesting User: {}", inputRequestor);
+        User findRequestor = userService.retrieveUserByUserName(inputRequestor);
+
+        User newRequestor = (findRequestor == null) ? new User(inputRequestor) : findRequestor;
+        logger.info("Linked Requesting User: {}", newRequestor);
+
+        B2B_IPs newB2Bip = new B2B_IPs(newCustomer, b2b_ip.getIpAddress(), newSnow, b2b_ip.isInFirewall(), newRequestor);
         b2BIPsRepository.save(newB2Bip);
 
         logger.info("Successfully saved B2B_IP entry: {}", newB2Bip);

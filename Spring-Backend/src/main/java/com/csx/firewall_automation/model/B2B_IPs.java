@@ -31,11 +31,19 @@ public class B2B_IPs {
     @Column(updatable = false) // Prevent updates to this field
     private LocalDateTime createdAt;
 
-    public B2B_IPs(B2B_Customers b2bCustomer, String ipAddress, Snow snowReqObj, boolean inFirewall) {
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User requestedBy;
+
+    public B2B_IPs() {
+    }
+
+    public B2B_IPs(B2B_Customers b2bCustomer, String ipAddress, Snow snowReqObj, boolean inFirewall, User requestedBy) {
         this.customerObj = b2bCustomer;
         this.ipAddress = ipAddress;
         this.snowReqObj = snowReqObj;
         this.inFirewall = inFirewall;
+        this.requestedBy = requestedBy;
     }
 
     public Long getId() {
@@ -86,6 +94,14 @@ public class B2B_IPs {
         this.createdAt = createdAt;
     }
 
+    public User getRequestedBy() {
+        return requestedBy;
+    }
+
+    public void setRequestedBy(User requestedBy) {
+        this.requestedBy = requestedBy;
+    }
+
     @Override
     public String toString() {
         return "B2B_IPs{" +
@@ -95,6 +111,7 @@ public class B2B_IPs {
                 ", snowReqObj=" + snowReqObj +
                 ", inFirewall=" + inFirewall +
                 ", createdAt=" + createdAt +
+                ", requestedBy=" + requestedBy +
                 '}';
     }
 }

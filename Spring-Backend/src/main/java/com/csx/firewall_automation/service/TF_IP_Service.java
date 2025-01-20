@@ -3,6 +3,7 @@ package com.csx.firewall_automation.service;
 import com.csx.firewall_automation.model.Jira;
 import com.csx.firewall_automation.model.Snow;
 import com.csx.firewall_automation.model.TF_IPs;
+import com.csx.firewall_automation.model.User;
 import com.csx.firewall_automation.repository.TF_IPsRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -19,11 +20,13 @@ public class TF_IP_Service {
     private final TF_IPsRepository tfIPsRepository;
     private final JiraService jiraService;
     private final SnowService snowService;
+    private final UserService userService;
 
-    public TF_IP_Service(TF_IPsRepository tfIPsRepository, JiraService jiraService, SnowService snowService) {
+    public TF_IP_Service(TF_IPsRepository tfIPsRepository, JiraService jiraService, SnowService snowService, UserService userService) {
         this.tfIPsRepository = tfIPsRepository;
         this.jiraService = jiraService;
         this.snowService = snowService;
+        this.userService = userService;
     }
 
     public List<TF_IPs> retrieveAllTfIPs() {
@@ -48,7 +51,15 @@ public class TF_IP_Service {
         Snow newSnow = (findSnow == null) ? new Snow(inputSnowReq) : findSnow;
         logger.info("Linked Snow object: {}", newSnow);
 
-        TF_IPs newTfIp = new TF_IPs(tf_ip.getIpAddress(), newJira, newSnow, tf_ip.isInFirewall());
+        String inputRequestor = tf_ip.getRequestedBy().getName();
+        logger.debug("Processing Requesting User: {}", inputRequestor);
+        User findRequestor = userService.retrieveUserByUserName(inputRequestor);
+
+        User newRequestor = (findRequestor == null) ? new User(inputRequestor) : findRequestor;
+        logger.info("Linked Requesting User: {}", newRequestor);
+
+
+        TF_IPs newTfIp = new TF_IPs(tf_ip.getIpAddress(), newJira, newSnow, tf_ip.isInFirewall(), newRequestor);
         tfIPsRepository.save(newTfIp);
 
         logger.info("Successfully saved TF_IPs entry: {}", newTfIp);

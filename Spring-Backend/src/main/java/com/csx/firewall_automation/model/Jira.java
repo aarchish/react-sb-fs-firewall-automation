@@ -13,6 +13,9 @@ public class Jira {
     @Column(nullable = false)
     private String jiraTicket;
 
+    public Jira() {
+    }
+    
     public Jira(String jiraTicket) {
         this.jiraTicket = jiraTicket;
     }

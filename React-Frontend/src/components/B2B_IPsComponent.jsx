@@ -4,6 +4,8 @@ import { getListOfB2B_IPs } from '../services/B2B_IPs_Service';
 import * as XLSX from 'xlsx';
 
 const ListB2B_IPsComponent = () => {
+  console.log('ListB2B_IPsComponent rendered'); // Log ListB2B_IPsComponent rendering
+  
   const [b2b_IPs, setB2B_IPs] = useState([]);
 
   useEffect(() => {
@@ -27,10 +29,22 @@ const ListB2B_IPsComponent = () => {
     { accessorFn: row => row.snowReqObj?.snowREQ, id: 'snowREQ', header: 'Snow REQ' },
     { accessorKey: 'inFirewall', header: 'In Firewall', Cell: ({ cell }) => (cell.getValue() ? 'Yes' : 'No') },
     { accessorKey: 'createdAt', header: 'Created At', Cell: ({ cell }) => new Date(cell.getValue()).toLocaleString() },
+    { accessorFn: row => row.requestedBy?.name, id: 'name', header: 'Requestor' },
   ];
 
   const exportToExcel = (selectedRows) => {
-    const data = selectedRows.map(row => row.original);
+    const data = selectedRows.map(row => {
+      const { id, customerObj, ipAddress, snowReqObj, inFirewall, createdAt, requestedBy} = row.original;
+      return {
+        "ID" : id,
+        "Customer Name": customerObj?.customerName,
+        "IP Address": ipAddress,
+        "ServiceNow Request": snowReqObj?.snowREQ,
+        "In Firewall": inFirewall ? 'Yes' : 'No',
+        "Created At": new Date(createdAt).toLocaleString(),
+        "Requestor": requestedBy?.name,
+      };
+    });
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'B2B IPs');

@@ -33,11 +33,19 @@ public class TF_IPs {
     @Column(updatable = false) // Prevent updates to this field
     private LocalDateTime createdAt;
 
-    public TF_IPs(String ipAddress, Jira jiraObj, Snow snowReqObj, boolean inFirewall) {
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User requestedBy;
+
+    public TF_IPs() {
+    }
+
+    public TF_IPs(String ipAddress, Jira jiraObj, Snow snowReqObj, boolean inFirewall, User requestedBy) {
         this.ipAddress = ipAddress;
         this.jiraObj = jiraObj;
         this.snowReqObj = snowReqObj;
         this.inFirewall = inFirewall;
+        this.requestedBy = requestedBy;
     }
 
     public Long getId() {
@@ -88,6 +96,14 @@ public class TF_IPs {
         this.createdAt = createdAt;
     }
 
+    public User getRequestedBy() {
+        return requestedBy;
+    }
+
+    public void setRequestedBy(User requestedBy) {
+        this.requestedBy = requestedBy;
+    }
+
     @Override
     public String toString() {
         return "TF_IPs{" +
@@ -97,6 +113,7 @@ public class TF_IPs {
                 ", snowReqObj=" + snowReqObj +
                 ", inFirewall=" + inFirewall +
                 ", createdAt=" + createdAt +
+                ", requestedBy=" + requestedBy +
                 '}';
     }
 }

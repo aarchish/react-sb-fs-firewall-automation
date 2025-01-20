@@ -16,6 +16,9 @@ public class Snow {
     @Column(nullable = false)
     private String snowREQ;
 
+    public Snow() {
+    }
+
     public Snow(String snowREQ) {
         this.snowREQ = snowREQ;
     }

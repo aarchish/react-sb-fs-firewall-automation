@@ -12,6 +12,9 @@ public class B2B_Customers {
     @Column(nullable = false)
     private String customerName;
 
+    public B2B_Customers() {
+    }
+
     public B2B_Customers(String customerName) {
         this.customerName = customerName;
     }

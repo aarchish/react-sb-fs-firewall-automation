@@ -31,6 +31,9 @@ public class TF_URLs {
     @Column(updatable = false) // Prevent updates to this field
     private LocalDateTime createdAt;
 
+    public TF_URLs() {
+    }
+
     public TF_URLs(String url, Jira jiraObj, Snow snowReqObj, boolean inFirewall) {
         this.url = url;
         this.jiraObj = jiraObj;

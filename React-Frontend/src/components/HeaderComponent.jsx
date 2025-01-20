@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
 
 const HeaderComponent = () => {
   return (
