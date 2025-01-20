@@ -1,0 +1,12 @@
+# k8s/frontend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-frontend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: react-frontend

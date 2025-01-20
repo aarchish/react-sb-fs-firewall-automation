@@ -1,0 +1,27 @@
+# k8s/backend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spring-backend
+  template:
+    metadata:
+      labels:
+        app: spring-backend
+    spec:
+      containers:
+      - name: spring-backend
+        image: aarchish/spring-backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql-service:3306/firewall_automation
+        - name: SPRING_DATASOURCE_USERNAME
+          value: aarchish
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: Aarchish@123
