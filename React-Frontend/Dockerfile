@@ -5,6 +5,9 @@ FROM node:16-alpine as build
 # Set the working directory
 WORKDIR /app
 
+# List files to debug
+RUN ls -al /
+
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
