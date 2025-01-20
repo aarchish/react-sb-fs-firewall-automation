@@ -8,11 +8,20 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
+# List files to debug
+RUN ls -al /app
+
 # Install dependencies
 RUN npm install
 
+# List files to debug
+RUN ls -al /app
+
 # Copy the rest of the application code
 COPY . .
+
+# List files to debug
+RUN ls -al /app
 
 # Build the application
 RUN npm run build
