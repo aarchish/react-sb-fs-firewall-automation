@@ -12,6 +12,9 @@ RUN ls -al /
 COPY ./package*.json ./
 
 # List files to debug
+RUN ls -al /
+
+# List files to debug
 RUN ls -al /app
 
 # Install dependencies
