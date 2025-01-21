@@ -9,13 +9,13 @@ WORKDIR /app
 RUN ls -al /
 
 # List files to debug
-RUN ls -al /user
+RUN ls -al /usr
 
 # List files to debug
-RUN ls -al /user/src
+RUN ls -al /usr/src
 
 # List files to debug
-RUN ls -al /user/src/app
+RUN ls -al /usr/src/app
 
 # Copy package.json and package-lock.json
 COPY ./package*.json ./app
