@@ -41,6 +41,10 @@ jobs:
       with:
         version: 'v1.18.0'
 
+    - name: Install kubelogin
+      run: |
+          az aks install-cli
+
     - name: Configure kubectl
       run: |
           mkdir -p $HOME/.kube
