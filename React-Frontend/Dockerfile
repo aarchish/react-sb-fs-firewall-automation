@@ -18,7 +18,7 @@ RUN ls -al /home
 RUN ls -al /home/node
 
 # Copy package.json and package-lock.json
-COPY /package.json /app
+COPY ./package.json /app
 #COPY /package-lock.json /app
 
 # List files to debug
