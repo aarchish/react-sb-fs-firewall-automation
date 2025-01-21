@@ -15,7 +15,7 @@ RUN ls -al /usr
 RUN ls -al /usr/src
 
 # List files to debug
-RUN ls -al /usr/src/app
+#RUN ls -al /usr/src/app
 
 # Copy package.json and package-lock.json
 COPY ./package*.json ./app
