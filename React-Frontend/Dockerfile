@@ -6,20 +6,7 @@ FROM node:current-alpine as build
 WORKDIR /app
 
 # List files to debug
-RUN ls -al /
-
-# List files to debug
 RUN ls -al /app
-# List files to debug
-#RUN ls -al /usr/src
-# List files to debug
-#RUN ls -al /usr/src/app
-
-# List files to debug
-#RUN ls -al /home
-
-# List files to debug
-#RUN ls -al /home/node
 
 # Copy package.json and package-lock.json
 COPY **/package*.json ./
@@ -27,9 +14,6 @@ COPY **/package*.json ./
 
 # List files to debug
 RUN ls -al /app
-
-# List files to debug
-#RUN ls -al /app
 
 # Install dependencies
 RUN npm install
