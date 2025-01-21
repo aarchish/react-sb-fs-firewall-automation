@@ -3,41 +3,45 @@
 #FROM node:16-alpine as build
 FROM node:current-alpine as build
 # Set the working directory
-WORKDIR ./app
+WORKDIR /usr/src/app
 
 # List files to debug
 RUN ls -al /
 
 # List files to debug
 RUN ls -al /usr
+# List files to debug
+RUN ls -al /usr/src
+# List files to debug
+RUN ls -al /usr/src/app
 
 # List files to debug
-RUN ls -al /home
+#RUN ls -al /home
 
 # List files to debug
-RUN ls -al /home/node
+#RUN ls -al /home/node
 
 # Copy package.json and package-lock.json
-COPY ./package.json ./app
+COPY **/package*.json ./
 #COPY /package-lock.json /app
 
 # List files to debug
-RUN ls -al /
+RUN ls -al /usr/src/app
 
 # List files to debug
-RUN ls -al /app
+#RUN ls -al /app
 
 # Install dependencies
 RUN npm install
 
 # List files to debug
-RUN ls -al /app
+RUN ls -al /usr/src/app
 
 # Copy the rest of the application code
 COPY . .
 
 # List files to debug
-RUN ls -al /app
+RUN ls -al /usr/src/app
 
 # Build the application
 RUN npm run build
