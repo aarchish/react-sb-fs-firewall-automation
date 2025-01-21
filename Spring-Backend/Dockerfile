@@ -9,7 +9,7 @@ WORKDIR /app
 #RUN ls -al /app
 
 # Copy the pom.xml and download dependencies
-COPY **/pom.xml ./
+COPY ./pom.xml ./
 RUN mvn dependency:go-offline
 
 # List files to debug
