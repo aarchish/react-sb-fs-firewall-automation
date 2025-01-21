@@ -12,7 +12,7 @@ RUN ls -al /
 RUN ls -al /usr
 
 # List files to debug
-RUN ls -al /usr/src
+#RUN ls -al /usr/src
 
 # List files to debug
 RUN ls -al /home
