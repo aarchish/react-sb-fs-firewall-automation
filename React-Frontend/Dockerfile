@@ -1,7 +1,7 @@
 # React-Frontend/Dockerfile
 # Use an official node image as the base image
-FROM node:16-alpine as build
-
+#FROM node:16-alpine as build
+FROM node:current-alpine as build
 # Set the working directory
 WORKDIR /app
 
