@@ -41,6 +41,10 @@ jobs:
       with:
         version: 'v1.18.0'
 
+    - name: Configure kubectl
+      run: |
+          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode > $HOME/.kube/config
+
     - name: Deploy to Kubernetes
       run: |
         kubectl apply -f k8s/mysql-deployment.yaml
