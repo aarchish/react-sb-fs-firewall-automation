@@ -24,8 +24,8 @@ COPY ./src ./src
 # Build the application
 RUN mvn package -DskipTests
 
-# Use an official openjdk image to run the application
-FROM openjdk:11-jre-slim
+# Use an official Amazon Corretto 23 image to run the application
+FROM amazoncorretto:23
 
 # Copy the built jar file from the build stage
 COPY --from=build /app/target/firewall-automation-0.0.1-SNAPSHOT.jar /app/firewall-automation.jar
