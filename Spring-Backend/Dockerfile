@@ -5,12 +5,21 @@ FROM maven:3.9.9-amazoncorretto-23 as build
 # Set the working directory
 WORKDIR /app
 
+# List files to debug
+#RUN ls -al /app
+
 # Copy the pom.xml and download dependencies
 COPY **/pom.xml ./
 RUN mvn dependency:go-offline
 
+# List files to debug
+#RUN ls -al /app
+
+# List files to debug
+#RUN ls -al /app
+
 # Copy the rest of the application code
-COPY ./Spring-Backend/src ./src
+COPY ./src ./src
 
 # Build the application
 RUN mvn package -DskipTests
