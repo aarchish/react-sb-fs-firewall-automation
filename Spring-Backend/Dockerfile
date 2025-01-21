@@ -1,6 +1,6 @@
 # Spring-Backend/Dockerfile
 # Use an official maven image to build the application
-FROM maven:3.8.4-openjdk-11 as build
+FROM maven:3.9.9-amazoncorretto-23 as build
 
 # Set the working directory
 WORKDIR /app
