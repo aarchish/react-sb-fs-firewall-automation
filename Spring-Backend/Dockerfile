@@ -10,7 +10,7 @@ COPY **/pom.xml ./
 RUN mvn dependency:go-offline
 
 # Copy the rest of the application code
-COPY ./Spring-Frontend/src ./src
+COPY ./Spring-Backend/src ./src
 
 # Build the application
 RUN mvn package -DskipTests
