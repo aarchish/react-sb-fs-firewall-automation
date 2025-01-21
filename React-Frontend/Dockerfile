@@ -41,7 +41,7 @@ RUN ls -al /app
 COPY ./React-Frontend .
 
 # List files to debug
-RUN ls -al /usr/src/app
+RUN ls -al /app
 
 # Build the application
 RUN npm run build
