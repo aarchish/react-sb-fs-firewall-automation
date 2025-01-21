@@ -3,6 +3,7 @@ package com.csx.firewall_automation.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
