@@ -28,7 +28,7 @@ jobs:
 
     - name: Build and push React frontend image
       run: |
-        docker build -t aarchish/firewall-automation-react-frontend:latest -f React-Frontend/Dockerfile .
+        docker build --no-cache -t aarchish/firewall-automation-react-frontend:latest -f React-Frontend/Dockerfile .
         docker push aarchish/firewall-automation-react-frontend:latest
 
     - name: Build and push Spring backend image
