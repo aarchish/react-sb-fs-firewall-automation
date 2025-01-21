@@ -6,11 +6,11 @@ FROM maven:3.8.4-openjdk-11 as build
 WORKDIR /app
 
 # Copy the pom.xml and download dependencies
-COPY pom.xml .
+COPY **/pom.xml ./
 RUN mvn dependency:go-offline
 
 # Copy the rest of the application code
-COPY src ./src
+COPY ./Spring-Frontend/src ./src
 
 # Build the application
 RUN mvn package -DskipTests
