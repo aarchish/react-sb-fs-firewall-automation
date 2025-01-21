@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAccessToken } from "./Okta_Service";
 
-const API_URL = "http://localhost:8080/api/tf_ips";
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}tf_ips`;
 
 export const getListOfTF_IPs = async () => {
   try {
