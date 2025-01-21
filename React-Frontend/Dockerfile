@@ -3,7 +3,7 @@
 #FROM node:16-alpine as build
 FROM node:current-alpine as build
 # Set the working directory
-WORKDIR /app
+WORKDIR ./app
 
 # List files to debug
 RUN ls -al /
@@ -18,7 +18,7 @@ RUN ls -al /home
 RUN ls -al /home/node
 
 # Copy package.json and package-lock.json
-COPY ./package.json /app
+COPY ./package.json ./app
 #COPY /package-lock.json /app
 
 # List files to debug
