@@ -3,17 +3,17 @@
 #FROM node:16-alpine as build
 FROM node:current-alpine as build
 # Set the working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # List files to debug
 RUN ls -al /
 
 # List files to debug
-RUN ls -al /usr
+RUN ls -al /app
 # List files to debug
-RUN ls -al /usr/src
+#RUN ls -al /usr/src
 # List files to debug
-RUN ls -al /usr/src/app
+#RUN ls -al /usr/src/app
 
 # List files to debug
 #RUN ls -al /home
@@ -26,7 +26,7 @@ COPY **/package*.json ./
 #COPY /package-lock.json /app
 
 # List files to debug
-RUN ls -al /usr/src/app
+RUN ls -al /app
 
 # List files to debug
 #RUN ls -al /app
@@ -35,10 +35,10 @@ RUN ls -al /usr/src/app
 RUN npm install
 
 # List files to debug
-RUN ls -al /usr/src/app
+RUN ls -al /app
 
 # Copy the rest of the application code
-COPY . .
+COPY ./React-Frontend .
 
 # List files to debug
 RUN ls -al /usr/src/app
