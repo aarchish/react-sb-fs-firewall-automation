@@ -1,6 +1,7 @@
 import './App.css';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
-import { Security, LoginCallback } from '@okta/okta-react';
+import { Security, LoginCallback, useOktaAuth } from '@okta/okta-react';
 
 import HeaderComponent from './components/HeaderComponent';
 import FooterComponent from './components/FooterComponent';
@@ -11,6 +12,25 @@ import ListB2B_IPsComponent from './components/B2B_IPsComponent';
 
 import createOktaAuthClient from './security/OktaConfig';
 import SecureRoute from './security/SecureRoute';
+
+const LoginRedirect = () => {
+  const { createOktaAuthClient, authState } = useOktaAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authState) {
+      return; // Wait until authState is initialized
+    }
+
+    if (!authState.isAuthenticated) {
+      createOktaAuthClient.signInWithRedirect();
+    } else {
+      navigate('/home');
+    }
+  }, [authState, createOktaAuthClient, navigate]);
+
+  return <div>Loading...</div>;
+};
 
 // OktaSecurity component to wrap your app and manage login
 function OktaSecurity() {
@@ -31,7 +51,8 @@ function OktaSecurity() {
     >
       <HeaderComponent />
       <Routes>
-        <Route path="/" element={<LoginCallback />} />
+        <Route path="/login/callback" element={<LoginCallback />} />
+        <Route path="/" element={<LoginRedirect />} />
         <Route path="/home" element={<SecureRoute><HomeComponent /></SecureRoute>}/>
         <Route path="/tf_ips" element={<SecureRoute><ListTF_IPsComponent /></SecureRoute>} />
         <Route path="/b2b_ips" element={<SecureRoute><ListB2B_IPsComponent /></SecureRoute>} />
