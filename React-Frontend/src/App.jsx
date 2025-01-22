@@ -9,7 +9,7 @@ import HomeComponent from './components/HomeComponent';
 import ListTF_IPsComponent from './components/TF_IPsComponent';
 import ListB2B_IPsComponent from './components/B2B_IPsComponent';
 
-import oktaAuth from './security/OktaConfig';
+import createOktaAuthClient from './security/OktaConfig';
 import SecureRoute from './security/SecureRoute';
 
 // OktaSecurity component to wrap your app and manage login
@@ -26,7 +26,7 @@ function OktaSecurity() {
 
   return (
     <Security 
-      oktaAuth={oktaAuth} 
+      oktaAuth={createOktaAuthClient} 
       restoreOriginalUri={restoreOriginalUri}
     >
       <HeaderComponent />
