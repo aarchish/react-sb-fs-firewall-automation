@@ -8,7 +8,8 @@ export const getListOfB2B_IPs = async () => {
     const accessToken = await getAccessToken();
     return await axios.get(API_URL, {
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
+        'scope' : 'read write'
       }
     });
   } catch (error) {
