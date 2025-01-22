@@ -14,7 +14,7 @@ import createOktaAuthClient from './security/OktaConfig';
 import SecureRoute from './security/SecureRoute';
 
 const LoginRedirect = () => {
-  const { createOktaAuthClient, authState } = useOktaAuth();
+  const { oktaAuth, authState } = useOktaAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,11 +23,11 @@ const LoginRedirect = () => {
     }
 
     if (!authState.isAuthenticated) {
-      createOktaAuthClient.signInWithRedirect();
+      oktaAuth.signInWithRedirect();
     } else {
       navigate('/home');
     }
-  }, [authState, createOktaAuthClient, navigate]);
+  }, [authState, oktaAuth, navigate]);
 
   return <div>Loading...</div>;
 };
