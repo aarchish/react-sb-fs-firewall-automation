@@ -6,6 +6,7 @@ import { Security, LoginCallback, useOktaAuth } from '@okta/okta-react';
 import HeaderComponent from './components/HeaderComponent';
 import FooterComponent from './components/FooterComponent';
 import HomeComponent from './components/HomeComponent';
+import LoginWrapper from './components/LoginWrapper';
 
 import ListTF_IPsComponent from './components/TF_IPsComponent';
 import ListB2B_IPsComponent from './components/B2B_IPsComponent';
@@ -49,7 +50,7 @@ function OktaSecurity() {
     >
       <HeaderComponent />
       <Routes>
-        <Route path="/" element={<LoginCallback />} />
+        <Route path="/" element={<LoginWrapper />} />
         <Route path="/home" element={<SecureRoute><HomeComponent /></SecureRoute>}/>
         <Route path="/tf_ips" element={<SecureRoute><ListTF_IPsComponent /></SecureRoute>} />
         <Route path="/b2b_ips" element={<SecureRoute><ListB2B_IPsComponent /></SecureRoute>} />
