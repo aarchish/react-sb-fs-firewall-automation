@@ -1,5 +1,5 @@
-.github\workflows
+.\.github\workflows
 .\.vscode
 .\node_modules
-kubeconfig.base64
-.\k8s
+.\kubeconfig.base64
+.\k8snp
