@@ -27,10 +27,6 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
-  // Add this section to handle client-side routing
-  // esbuild: {
-  //   jsxInject: `import React from 'react'`,
-  // },
   optimizeDeps: {
     include: ['react', 'react-dom'],
   },
