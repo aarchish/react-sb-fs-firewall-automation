@@ -16,7 +16,7 @@ import SecureRoute from './security/SecureRoute';
 function OktaSecurity() {
   const navigate = useNavigate();
   
-  const restoreOriginalUri = (originalUri) => {
+  const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     console.log('Restoring original URI:', originalUri); // Log restoreOriginalUri
     // Navigate back to the original URI if authenticated, else default to '/'
     navigate(originalUri || '/');
