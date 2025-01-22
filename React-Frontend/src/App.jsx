@@ -24,8 +24,6 @@ const LoginRedirect = () => {
 
     if (!authState.isAuthenticated) {
       oktaAuth.signInWithRedirect();
-    } else {
-      navigate('/home');
     }
   }, [authState, oktaAuth, navigate]);
 
