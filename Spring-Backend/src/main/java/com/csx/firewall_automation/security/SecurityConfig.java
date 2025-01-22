@@ -31,7 +31,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("public/**").permitAll() // Public endpoints that do not require authentication
+                        .requestMatchers("/public/**").permitAll() // Public endpoints that do not require authentication
                         .anyRequest().authenticated() // Secure all other endpoints
                 )
                 .oauth2ResourceServer((svr) -> svr.jwt(Customizer.withDefaults()));
