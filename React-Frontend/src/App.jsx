@@ -50,11 +50,11 @@ function OktaSecurity() {
       restoreOriginalUri={restoreOriginalUri}
     >
       <Routes>
-        <Route exact path="/login/callback" element={<LoginCallback />} />
-        <Route exact path="/" element={<LoginRedirect />} />
-        <Route exact path="/home" element={<SecureRoute><HomeComponent /></SecureRoute>}/>
-        <Route exact path="/tf_ips" element={<SecureRoute><ListTF_IPsComponent /></SecureRoute>} />
-        <Route exact path="/b2b_ips" element={<SecureRoute><ListB2B_IPsComponent /></SecureRoute>} />
+        <Route path="/login/callback" element={<LoginCallback />} />
+        <Route path="/" element={<LoginRedirect />} />
+        <Route path="/home" element={<SecureRoute><HomeComponent /></SecureRoute>}/>
+        <Route path="/tf_ips" element={<SecureRoute><ListTF_IPsComponent /></SecureRoute>} />
+        <Route path="/b2b_ips" element={<SecureRoute><ListB2B_IPsComponent /></SecureRoute>} />
       </Routes>
     </Security>
   );
