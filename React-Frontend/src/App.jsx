@@ -1,7 +1,8 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
-import { Security, LoginCallback, useOktaAuth } from '@okta/okta-react';
+import { Security } from '@okta/okta-react';
+import { Container } from '@mui/material';
 
 import HeaderComponent from './components/HeaderComponent';
 import FooterComponent from './components/FooterComponent';
@@ -49,12 +50,14 @@ function OktaSecurity() {
       restoreOriginalUri={restoreOriginalUri}
     >
       <HeaderComponent />
-      <Routes>
-        <Route path="/" element={<LoginWrapper />} />
-        <Route path="/home" element={<SecureRoute><HomeComponent /></SecureRoute>}/>
-        <Route path="/tf_ips" element={<SecureRoute><ListTF_IPsComponent /></SecureRoute>} />
-        <Route path="/b2b_ips" element={<SecureRoute><ListB2B_IPsComponent /></SecureRoute>} />
-      </Routes>
+      <Container>
+        <Routes>
+          <Route path="/" element={<LoginWrapper />} />
+          <Route path="/home" element={<SecureRoute><HomeComponent /></SecureRoute>}/>
+          <Route path="/tf_ips" element={<SecureRoute><ListTF_IPsComponent /></SecureRoute>} />
+          <Route path="/b2b_ips" element={<SecureRoute><ListB2B_IPsComponent /></SecureRoute>} />
+        </Routes>
+      </Container>
       <FooterComponent />
     </Security>
   );

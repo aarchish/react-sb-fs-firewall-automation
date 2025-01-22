@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialReactTable } from 'material-react-table';
+import { Container, Typography, Button, Box } from '@mui/material';
 import { getListOfTF_IPs } from '../services/TF_IPs_Service';
 import * as XLSX from 'xlsx';
 
@@ -52,8 +53,10 @@ const ListTF_IPsComponent = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="text-center">List Of Threat Feed IPs</h2>
+    <Container>
+      <Typography variant="h4" gutterBottom className="text-center">
+        List Of Threat Feed IPs
+      </Typography>
       <MaterialReactTable
         columns={columns}
         data={tfIPs}
@@ -63,14 +66,17 @@ const ListTF_IPsComponent = () => {
         enablePagination
         enableRowSelection
         renderTopToolbarCustomActions={({ table }) => (
-          <button
+          <Button
+            variant="contained"
+            color="primary"
             onClick={() => {
               const selectedRows = table.getSelectedRowModel().rows;
+              console.log('Selected Rows:', selectedRows);
               exportToExcel(selectedRows);
             }}
           >
             Export Selected
-          </button>
+          </Button>
         )}
         muiTablePaginationProps={{
           rowsPerPageOptions: [10, 20, 50],
@@ -78,7 +84,7 @@ const ListTF_IPsComponent = () => {
           showLastButton: true,
         }}
       />
-    </div>
+    </Container>
   );
 };
 

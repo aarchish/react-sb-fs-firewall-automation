@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialReactTable } from 'material-react-table';
+import { Container, Typography, Button, Box } from '@mui/material';
 import { getListOfB2B_IPs } from '../services/B2B_IPs_Service';
 import * as XLSX from 'xlsx';
 
@@ -52,8 +53,10 @@ const ListB2B_IPsComponent = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="text-center">List Of B2B IPs</h2>
+    <Container>
+      <Typography variant="h4" gutterBottom className="text-center">
+        List Of B2B IPs
+      </Typography>
       <MaterialReactTable
         columns={columns}
         data={b2b_IPs}
@@ -63,16 +66,17 @@ const ListB2B_IPsComponent = () => {
         enablePagination
         enableRowSelection
         renderTopToolbarCustomActions={({ table }) => (
-          <button
+          <Button
+            variant="contained"
+            color="primary"
             onClick={() => {
               const selectedRows = table.getSelectedRowModel().rows;
               console.log('Selected Rows:', selectedRows);
-              // Add your export logic here
               exportToExcel(selectedRows);
             }}
           >
             Export Selected
-          </button>
+          </Button>
         )}
         muiTablePaginationProps={{
           rowsPerPageOptions: [10, 20, 50],
@@ -80,7 +84,7 @@ const ListB2B_IPsComponent = () => {
           showLastButton: true,
         }}
       />
-    </div>
+    </Container>
   );
 };
 
