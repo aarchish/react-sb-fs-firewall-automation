@@ -8,8 +8,7 @@ export const getListOfTF_IPs = async () => {
     const accessToken = await getAccessToken();
     return await axios.get(API_URL, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'scope' : 'read write'
+        Authorization: `Bearer ${accessToken}`
       }
     });
   } catch (error) {
