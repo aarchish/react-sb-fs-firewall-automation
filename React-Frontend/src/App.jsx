@@ -49,7 +49,6 @@ function OktaSecurity() {
       oktaAuth={createOktaAuthClient} 
       restoreOriginalUri={restoreOriginalUri}
     >
-      <HeaderComponent />
       <Routes>
         <Route path="/login/callback" element={<LoginCallback />} />
         <Route path="/" exact element={<LoginRedirect />} />
@@ -57,7 +56,6 @@ function OktaSecurity() {
         <Route path="/tf_ips" exact element={<SecureRoute><ListTF_IPsComponent /></SecureRoute>} />
         <Route path="/b2b_ips" exact element={<SecureRoute><ListB2B_IPsComponent /></SecureRoute>} />
       </Routes>
-      <FooterComponent />
     </Security>
   );
 }
