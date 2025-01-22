@@ -52,10 +52,10 @@ function OktaSecurity() {
       <HeaderComponent />
       <Routes>
         <Route path="/login/callback" element={<LoginCallback />} />
-        <Route path="/" element={<LoginRedirect />} />
-        <Route path="/home" element={<SecureRoute><HomeComponent /></SecureRoute>}/>
-        <Route path="/tf_ips" element={<SecureRoute><ListTF_IPsComponent /></SecureRoute>} />
-        <Route path="/b2b_ips" element={<SecureRoute><ListB2B_IPsComponent /></SecureRoute>} />
+        <Route path="/" exact element={<LoginRedirect />} />
+        <Route path="/home" exact element={<SecureRoute><HomeComponent /></SecureRoute>}/>
+        <Route path="/tf_ips" exact element={<SecureRoute><ListTF_IPsComponent /></SecureRoute>} />
+        <Route path="/b2b_ips" exact element={<SecureRoute><ListB2B_IPsComponent /></SecureRoute>} />
       </Routes>
       <FooterComponent />
     </Security>
