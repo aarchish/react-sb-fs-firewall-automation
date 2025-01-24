@@ -50,7 +50,7 @@ function OktaSecurity() {
       restoreOriginalUri={restoreOriginalUri}
     >
       <HeaderComponent />
-      <Container>
+      <Container maxWidth={false} sx={{ width:'100%'}}>
         <Routes>
           <Route path="/" element={<LoginWrapper />} />
           <Route path="/home" element={<SecureRoute><HomeComponent /></SecureRoute>}/>

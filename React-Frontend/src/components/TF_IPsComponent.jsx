@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialReactTable } from 'material-react-table';
-import { Container, Typography, Button, Box } from '@mui/material';
+import { Container, Typography, Button, Box, CircularProgress } from '@mui/material';
 import { getListOfTF_IPs } from '../services/TF_IPs_Service';
 import * as XLSX from 'xlsx';
 
@@ -8,6 +8,7 @@ const ListTF_IPsComponent = () => {
   console.log('ListTF_IPsComponent rendered'); // Log ListTF_IPsComponent rendering
   
   const [tfIPs, setTfIPs] = useState([]);
+  const [loading, setLoading] = useState(true); // State to manage loading
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +18,8 @@ const ListTF_IPsComponent = () => {
         setTfIPs(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally { 
+        setLoading(false); // Set loading to false when data is fetched
       }
     };
 
@@ -53,37 +56,63 @@ const ListTF_IPsComponent = () => {
   };
 
   return (
-    <Container>
+    <Container maxWidth={false} sx={{ width:'100%'}}>
       <Typography variant="h4" gutterBottom className="text-center">
         List Of Threat Feed IPs
       </Typography>
-      <MaterialReactTable
-        columns={columns}
-        data={tfIPs}
-        enableColumnFilters
-        enableGlobalFilter
-        enableSorting
-        enablePagination
-        enableRowSelection
-        renderTopToolbarCustomActions={({ table }) => (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              const selectedRows = table.getSelectedRowModel().rows;
-              console.log('Selected Rows:', selectedRows);
-              exportToExcel(selectedRows);
-            }}
-          >
-            Export Selected
-          </Button>
+        { loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" height="50vh">
+              <CircularProgress />
+            </Box>
+        ):(
+          <Box>
+            <MaterialReactTable
+              columns={columns}
+              data={tfIPs}
+              enableColumnFilters
+              enableGlobalFilter
+              enableSorting
+              enablePagination
+              enableRowSelection
+              enableColumnResizing
+              muiTableHeadRowProps={{
+                sx: {
+                  backgroundColor: 'rgba(240, 240, 240, 1)', // Add background color to table header
+                }
+              }}
+              muiTableHeadCellProps={{
+                sx: {
+                  border: '1px solid rgba(225, 225, 225, 1)', // Add border to table cells
+                  borderRadius: '0px', // Remove border radius
+                }
+              }}
+              muiTableBodyCellProps={{
+                sx: {
+                  border: '1px solid rgba(225, 225, 225, 1)', // Add border to table cells
+                  borderRadius: '0px', // Remove border radius
+                }
+              }}
+              renderTopToolbarCustomActions={({ table }) => (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    const selectedRows = table.getSelectedRowModel().rows;
+                    console.log('Selected Rows:', selectedRows);
+                    exportToExcel(selectedRows);
+                  }}
+                >
+                  Export Selected
+                </Button>
+              )}
+              muiTablePaginationProps={{
+                rowsPerPageOptions: [10, 20, 50],
+                showFirstButton: true,
+                showLastButton: true,
+              }}
+            />
+          </Box>
         )}
-        muiTablePaginationProps={{
-          rowsPerPageOptions: [10, 20, 50],
-          showFirstButton: true,
-          showLastButton: true,
-        }}
-      />
     </Container>
   );
 };

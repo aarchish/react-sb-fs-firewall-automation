@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialReactTable } from 'material-react-table';
-import { Container, Typography, Button, Box } from '@mui/material';
+import { Container, Typography, Button, Box, CircularProgress } from '@mui/material';
 import { getListOfB2B_IPs } from '../services/B2B_IPs_Service';
 import * as XLSX from 'xlsx';
 
@@ -8,6 +8,7 @@ const ListB2B_IPsComponent = () => {
   console.log('ListB2B_IPsComponent rendered'); // Log ListB2B_IPsComponent rendering
   
   const [b2b_IPs, setB2B_IPs] = useState([]);
+  const [loading, setLoading] = useState(true); // State to manage loading
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +18,8 @@ const ListB2B_IPsComponent = () => {
         setB2B_IPs(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false); // Set loading to false when data is fetched
       }
     };
 
@@ -53,10 +56,15 @@ const ListB2B_IPsComponent = () => {
   };
 
   return (
-    <Container>
+    <Container maxWidth={false} sx={{ width:'100%'}}>
       <Typography variant="h4" gutterBottom className="text-center">
         List Of B2B IPs
       </Typography>
+      { loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height="50vh">
+          <CircularProgress />
+        </Box>
+      ):(
       <MaterialReactTable
         columns={columns}
         data={b2b_IPs}
@@ -65,6 +73,23 @@ const ListB2B_IPsComponent = () => {
         enableSorting
         enablePagination
         enableRowSelection
+        muiTableHeadRowProps={{
+          sx: {
+            backgroundColor: 'rgba(240, 240, 240, 1)', // Add background color to table header
+          }
+        }}
+        muiTableHeadCellProps={{
+          sx: {
+            border: '1px solid rgba(225, 225, 225, 1)', // Add border to table cells
+            borderRadius: '0px', // Remove border radius
+          }
+        }}
+        muiTableBodyCellProps={{
+          sx: {
+            border: '1px solid rgba(225, 225, 225, 1)', // Add border to table cells
+            borderRadius: '0px', // Remove border radius
+          }
+        }}
         renderTopToolbarCustomActions={({ table }) => (
           <Button
             variant="contained"
@@ -75,7 +100,7 @@ const ListB2B_IPsComponent = () => {
               exportToExcel(selectedRows);
             }}
           >
-            Export Selected
+            Export Selected Rows to Excel
           </Button>
         )}
         muiTablePaginationProps={{
@@ -84,6 +109,7 @@ const ListB2B_IPsComponent = () => {
           showLastButton: true,
         }}
       />
+      )}
     </Container>
   );
 };

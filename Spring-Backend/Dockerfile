@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Copy the pom.xml and download dependencies
 COPY ./pom.xml ./
-RUN mvn dependency:go-offline
+RUN mvn dependency:go-offline -Ppublic
 
 # List files to debug
 #RUN ls -al /app
@@ -22,7 +22,7 @@ RUN mvn dependency:go-offline
 COPY ./src ./src
 
 # Build the application
-RUN mvn package -DskipTests
+RUN mvn package -DskipTests -Ppublic
 
 # Use an official Amazon Corretto 23 image to run the application
 FROM amazoncorretto:23
