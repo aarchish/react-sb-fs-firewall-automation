@@ -22,7 +22,7 @@ RUN mvn dependency:go-offline -Ppublic
 COPY ./src ./src
 
 # Build the application
-RUN mvn package -DskipTests -Ppublic
+RUN mvn clean package -Dmaven.skip.tests=true -Ppublic
 
 # Use an official Amazon Corretto 23 image to run the application
 FROM amazoncorretto:23
