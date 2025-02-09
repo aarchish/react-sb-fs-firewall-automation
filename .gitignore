@@ -3,5 +3,4 @@
 .\node_modules
 .\kubeconfig.base64
 .\k8snp
-.\.env
-.\Spring-Backend\.env
+**\.env
