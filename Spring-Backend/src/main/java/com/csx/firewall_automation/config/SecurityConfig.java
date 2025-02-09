@@ -1,4 +1,4 @@
-package com.csx.firewall_automation.security;
+package com.csx.firewall_automation.config;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -28,14 +29,25 @@ public class SecurityConfig {
     private String allowedOrigins;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain filesSecurityFilterChain(HttpSecurity http) throws Exception {
+        http.securityMatcher("/files/**")
+                .authorizeHttpRequests(authz ->
+                        authz.anyRequest().authenticated())
+                .httpBasic(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable);
+        return http.build();
+    }
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/public/**").permitAll() // Public endpoints that do not require authentication
-                        .anyRequest().authenticated() // Secure all other endpoints
+                        .requestMatchers("/public/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer((svr) -> svr.jwt(Customizer.withDefaults()));
-
         return http.build();
     }
 
