@@ -12,6 +12,10 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -27,6 +31,18 @@ public class SecurityConfig {
 
     @Value("${cors.allowed.origins}")
     private String allowedOrigins;
+
+    @Value("${FIREWALL_USERNAME}")
+    private String firewallUsername;
+
+    @Value("${FIREWALL_PASSWORD}")
+    private String firewallPassword;
+
+    @Value("${IGNIO_USERNAME}")
+    private String ignioUsername;
+
+    @Value("${IGNIO_PASSWORD}")
+    private String ignioPassword;
 
     @Bean
     @Order(1)
@@ -92,5 +108,22 @@ public class SecurityConfig {
                 // Cleanup logic if needed
             }
         };
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user1 = User.withDefaultPasswordEncoder()
+                .username(firewallUsername)
+                .password(firewallPassword)
+                .roles("USER")
+                .build();
+
+        UserDetails user2 = User.withDefaultPasswordEncoder()
+                .username(ignioUsername)
+                .password(ignioPassword)
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user1, user2);
     }
 }
