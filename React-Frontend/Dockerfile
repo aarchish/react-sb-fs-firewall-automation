@@ -27,6 +27,10 @@ COPY . .
 # List files to debug
 RUN ls -al /app
 
+# Echo environment variables for debugging
+RUN echo "Environment Variables:"
+RUN cat .env
+
 # Build the application
 RUN npm run build
 
