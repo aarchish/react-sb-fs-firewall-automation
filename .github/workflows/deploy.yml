@@ -40,7 +40,7 @@ jobs:
       with:
         host: ${{ secrets.AZURE_VM_IP }}
         username: ${{ secrets.AZURE_VM_USERNAME }}
-        password: ${{ secrets.AZURE_VM_PASSWORD }}
+        password: ${{ secrets.AZURE_VM_SSH_KEY }}
         port: 22
         script: |
           git pull
