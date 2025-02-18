@@ -44,12 +44,20 @@ jobs:
         echo "${{ secrets.AZURE_VM_SSH_KEY }}" | base64 -d > private_key.pem
         chmod 600 private_key.pem
 
+    - name: Set up Docker Compose
+      run: |
+        sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker-compose --version
+
     - name: SSH into Azure VM and Deploy
       env:
-        VM_USER: ${{ vars.AZURE_VM_USERNAME }}
-        VM_HOST: ${{ vars.AZURE_VM_IP }}
+        VM_USER: ${{ secrets.AZURE_VM_USERNAME }}
+        VM_HOST: ${{ secrets.AZURE_VM_IP }}
       run: |
         ssh -o StrictHostKeyChecking=no -i private_key.pem "$VM_USER@$VM_HOST" "echo 'Connected successfully!'"
-        git pull
-        docker-compose down
-        docker-compose up -d --build
+        ssh -o StrictHostKeyChecking=no -i private_key.pem "$VM_USER@$VM_HOST" << 'EOF'
+          git pull
+          docker-compose down
+          docker-compose up -d --build
+        EOF
