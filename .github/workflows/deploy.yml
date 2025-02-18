@@ -50,3 +50,15 @@ jobs:
           git pull
           docker-compose down
           docker-compose up -d --build
+
+    - name: Decode and Set Up SSH Key
+      run: |
+        echo "${{ secrets.AZURE_VM_SSH_KEY }}" | base64 -d > private_key.pem
+        chmod 600 private_key.pem
+
+    - name: SSH into Azure VM
+      env:
+        VM_USER: ${{ secrets.AZURE_VM_USER }}
+        VM_HOST: ${{ secrets.AZURE_VM_IP }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -i private_key.pem "$VM_USER@$VM_HOST" "echo 'Connected successfully!'"
