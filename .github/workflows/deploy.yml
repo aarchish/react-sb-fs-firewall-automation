@@ -47,7 +47,7 @@ jobs:
     - name: SSH into Azure VM and Deploy
       env:
         VM_USER: ${{ vars.AZURE_VM_USER }}
-        VM_HOST: ${{ vars.AZURE_VM_IP }}
+        VM_HOST: ${{ vars.AZURE_VM_USERNAME }}
       run: |
         ssh -o StrictHostKeyChecking=no -i private_key.pem "$VM_USER@$VM_HOST" "echo 'Connected successfully!'"
         git pull
