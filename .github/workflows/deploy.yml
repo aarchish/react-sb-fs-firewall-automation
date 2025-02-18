@@ -35,6 +35,10 @@ jobs:
         npm install
         npm run build
 
+    - name: Debug SSH Key
+      run: |
+        echo "${{ secrets.AZURE_VM_SSH_KEY }}" | wc -l
+
     - name: Deploy to Azure VM
       uses: appleboy/ssh-action@v0.1.3
       with:
