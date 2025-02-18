@@ -22,7 +22,7 @@ RUN npm install
 RUN ls -al /app
 
 # Copy the rest of the application code
-COPY ./React-Frontend .
+COPY . .
 
 # List files to debug
 RUN ls -al /app
