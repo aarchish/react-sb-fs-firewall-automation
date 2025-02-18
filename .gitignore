@@ -1,4 +1,3 @@
-.\.github\workflows
 .\.vscode
 .\node_modules
 .\kubeconfig.base64

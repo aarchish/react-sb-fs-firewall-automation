@@ -1,34 +1,54 @@
 version: '3.8'
 
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
+  postgres:
+    image: postgres:13
+    container_name: postgres
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      POSTGRES_DB: ${SPRING_DATASOURCE_URL}
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
 
   spring-backend:
-    image: aarchish/firewall-automation-spring-backend:latest
+    build: ./Spring-Backend
     container_name: spring-backend
+    environment:
+      SERVER_PORT: ${SERVER_PORT}
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      OKTA_ISSUER: ${OKTA_ISSUER}
+      OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
+      OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
+      AZURE_STORAGE_ACCOUNT_NAME: ${AZURE_STORAGE_ACCOUNT_NAME}
+      AZURE_STORAGE_CONTAINER_NAME: ${AZURE_STORAGE_CONTAINER_NAME}
+      AZURE_CLIENT_ID: ${AZURE_CLIENT_ID}
+      AZURE_CLIENT_SECRET: ${AZURE_CLIENT_SECRET}
+      AZURE_TENANT_ID: ${AZURE_TENANT_ID}
+      AZURE_SUBSCRIPTION_ID: ${AZURE_SUBSCRIPTION_ID}
+      FIREWALL_USERNAME: ${FIREWALL_USERNAME}
+      FIREWALL_PASSWORD: ${FIREWALL_PASSWORD}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
     ports:
       - "8080:8080"
     depends_on:
-      - mysql
+      - postgres
 
   react-frontend:
-    image: aarchish/firewall-automation-react-frontend:latest
+    build: ./React-Frontend
     container_name: react-frontend
-    env_file:
-      - .env
+    environment:
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
+      REACT_APP_OKTA_ISSUER: ${REACT_APP_OKTA_ISSUER}
+      REACT_APP_OKTA_CLIENT_ID: ${REACT_APP_OKTA_CLIENT_ID}
     ports:
       - "80:80"
     depends_on:
       - spring-backend
 
 volumes:
-  mysql_data:
+  postgres_data:

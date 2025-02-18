@@ -27,7 +27,7 @@ public class FileController {
     private final BlobServiceClient blobServiceClient;
     private final String localCacheDir = "local-cache";
 
-    @Value("${spring.cloud.azure.storage.blob.container-name}")
+    @Value("${AZURE_STORAGE_CONTAINER_NAME}")
     private String containerName;
 
     public FileController(BlobServiceClient blobServiceClient) {
