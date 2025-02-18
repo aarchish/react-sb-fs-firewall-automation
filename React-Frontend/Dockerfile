@@ -9,7 +9,7 @@ WORKDIR /app
 RUN ls -al /app
 
 # Copy package.json and package-lock.json
-COPY **/package*.json ./
+COPY ./package.json ./
 #COPY /package-lock.json /app
 
 # List files to debug
