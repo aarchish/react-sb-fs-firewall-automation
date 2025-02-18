@@ -57,6 +57,7 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no -i private_key.pem "$VM_USER@$VM_HOST" "echo 'Connected successfully!'"
         ssh -o StrictHostKeyChecking=no -i private_key.pem "$VM_USER@$VM_HOST" << 'EOF'
+          cd react-sb-fs-firewall-automation
           git pull
           docker-compose down
           docker-compose up -d --build
