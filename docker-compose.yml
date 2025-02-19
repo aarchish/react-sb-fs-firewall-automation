@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:13
+    build: ./Postgres-DB
     container_name: postgres
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB: firewall_automation
       POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
       POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     ports:

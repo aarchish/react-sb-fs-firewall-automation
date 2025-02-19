@@ -1,0 +1,1 @@
+CREATE DATABASE firewall_automation;
