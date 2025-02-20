@@ -58,9 +58,9 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - VM_PUBLIC_IP=${{ vars.AZURE_VM_IP }}
-      - SSL_CERT=${{ vars.SSL_CERT }}
-      - SSL_KEY=${{ secrets.SSL_KEY }}
+      - VM_PUBLIC_IP=${VM_PUBLIC_IP}
+      - SSL_CERT=${SSL_CERT}
+      - SSL_KEY=${SSL_KEY}
     depends_on:
       - react-frontend
 
