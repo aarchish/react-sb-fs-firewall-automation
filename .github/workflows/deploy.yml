@@ -26,29 +26,38 @@ jobs:
 
     - name: Build Spring Boot Backend
       run: |
-        cd Spring-Backend
-        mvn clean package -Dmaven.skip.tests=true -Ppublic
-
+          echo "Building Spring Boot Backend..."
+          cd Spring-Backend
+          mvn clean package -Dmaven.skip.tests=true -Ppublic
+          echo "Spring Boot Backend built successfully."
+  
     - name: Build React Frontend
       run: |
-        cd React-Frontend
-        npm install
-        npm run build
+          echo "Building React Frontend..."
+          cd React-Frontend
+          npm install
+          npm run build
+          echo "React Frontend built successfully."
 
     - name: Debug SSH Key
       run: |
+        echo "Debugging SSH Key..."
         echo "${{ secrets.AZURE_VM_SSH_KEY }}" | wc -l
 
     - name: Decode and Set Up SSH Key
       run: |
+        echo "Decoding and setting up SSH Key..."
         echo "${{ secrets.AZURE_VM_SSH_KEY }}" | base64 -d > private_key.pem
         chmod 600 private_key.pem
+        echo "SSH Key set up successfully."
 
     - name: Set up Docker Compose
       run: |
+        echo "Setting up Docker Compose..."
         sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
         docker-compose --version
+        echo "Docker Compose set up successfully."
     
     - name: Validate Environment Variables
       run: |
@@ -66,10 +75,20 @@ jobs:
         SSL_CERT: ${{ vars.SSL_CERT }}
         SSL_KEY: ${{ secrets.SSL_KEY }}
       run: |
+        echo "Connecting to Azure VM..."
         ssh -o StrictHostKeyChecking=no -i private_key.pem "$VM_USER@$VM_HOST" "echo 'Connected successfully!'"
+        echo "Connected to Azure VM successfully."
+        echo "Deploying application..."
         ssh -o StrictHostKeyChecking=no -i private_key.pem "$VM_USER@$VM_HOST" << 'EOF'
           cd react-sb-fs-firewall-automation
           git pull
           docker-compose down
           docker-compose up -d --build
+          echo "Application deployed successfully."
+          echo "Fetching Nginx logs..."
+          docker-compose logs nginx
+          echo "Fetching React-Frontend logs..."
+          docker-compose logs react-frontend
+          echo "Fetching Spring-Backend logs..."
+          docker-compose logs spring-backend
         EOF
