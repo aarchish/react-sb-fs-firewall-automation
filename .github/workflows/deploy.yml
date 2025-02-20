@@ -49,7 +49,15 @@ jobs:
         sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
         docker-compose --version
-
+    
+    - name: Validate Environment Variables
+      run: |
+        echo "VM_USER: ${{ vars.AZURE_VM_USERNAME }}"
+        echo "VM_HOST: ${{ vars.AZURE_VM_IP }}"
+        echo "VM_PUBLIC_IP: ${{ vars.AZURE_VM_IP }}"
+        echo "SSL_CERT: ${{ secrets.SSL_CERT }}"
+        echo "SSL_KEY: ${{ secrets.SSL_KEY }}"
+    
     - name: SSH into Azure VM and Deploy
       env:
         VM_USER: ${{ vars.AZURE_VM_USERNAME }}
